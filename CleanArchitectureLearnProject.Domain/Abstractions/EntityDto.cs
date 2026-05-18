@@ -1,11 +1,7 @@
 ﻿namespace CleanArchitectureLearnProject.Domain.Abstractions;
 
-public abstract class Entity
+public abstract class EntityDto
 {
-    public Entity()
-    {
-        Id = Guid.CreateVersion7();
-    }
     public Guid Id { get; set; }
     public DateTime CreateAt { get; set; }
     public DateTime? UpdateAt { get; set; }
