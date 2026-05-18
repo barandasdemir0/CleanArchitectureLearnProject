@@ -40,8 +40,8 @@ public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
         {
             var errors = errorDictionary.Select(s => new ValidationFailure
             {
-                PropertyName = s.Key,
-                ErrorCode = s.Value
+                PropertyName = s.Value,
+                ErrorCode = s.Key
             });
             throw new ValidationException(errors);
         }

@@ -1,6 +1,7 @@
 ﻿using CleanArchitectureLearnProject.Domain.Employees;
 using CleanArchitectureLearnProject.Infrastructure.Application;
 using CleanArchitectureLearnProject.Infrastructure.Repositories;
+using GenericRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,8 +16,10 @@ public static class InsfrastructureRegistrar
         services.AddDbContext<ApplicationDbContext>(opt =>
         {
             string connection = configuration.GetConnectionString("SqlServer")!;
-            opt.UseSqlServer();
+            opt.UseSqlServer(connection);
         });
+
+        services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());
 
         services.Scan(opt =>
         {
