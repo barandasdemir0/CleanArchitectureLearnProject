@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="CleanArchitectureLearnProject.Application/CleanArchitectureLearnProject.Application.csproj" />
   <Project Path="CleanArchitectureLearnProject.Domain/CleanArchitectureLearnProject.Domain.csproj" />
+  <Project Path="CleanArchitectureLearnProject.Infrastructure/CleanArchitectureLearnProject.Infrastructure.csproj" />
 </Solution>
