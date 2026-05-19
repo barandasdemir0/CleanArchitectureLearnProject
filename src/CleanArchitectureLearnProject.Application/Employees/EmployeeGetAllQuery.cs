@@ -29,7 +29,7 @@ internal sealed class EmployeeGetAllQueryHandler(IEmployeeRepository employeeRep
             UpdateAt = s.UpdateAt,
             DeleteAt = s.DeleteAt,
             Id = s.Id,
-            IsDelete = s.IsDelete,
+            IsDelete = s.IsDeleted,
             TCNo = s.PersonelInformation.TCNo,
         }).AsQueryable();
 

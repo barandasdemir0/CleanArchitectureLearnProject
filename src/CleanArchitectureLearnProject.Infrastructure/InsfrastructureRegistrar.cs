@@ -1,7 +1,7 @@
-﻿using CleanArchitectureLearnProject.Domain.Employees;
+﻿using CleanArchitectureLearnProject.Domain.Users;
 using CleanArchitectureLearnProject.Infrastructure.Application;
-using CleanArchitectureLearnProject.Infrastructure.Repositories;
 using GenericRepository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +20,10 @@ public static class InsfrastructureRegistrar
         });
 
         services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());
+
+        services.AddIdentity<AppUser, IdentityRole<Guid>>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
         services.Scan(opt =>
         {
