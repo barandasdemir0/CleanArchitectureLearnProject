@@ -1,0 +1,48 @@
+# 🚀 Clean Architecture Setup 2025 - Öğrenme Projesi
+
+Bu proje, modern yazılım geliştirme prensiplerini ve .NET ekosistemindeki güncel yaklaşımları öğrenmek amacıyla geliştirilmiş bir **Clean Architecture** (Temiz Mimari) uygulamasıdır. Proje, Taner Saydam'ın "Sıfırdan Clean Architecture Setup 2025" eğitim serisi referans alınarak adım adım inşa edilmiştir.
+
+## 🛠 Kullanılan Teknolojiler ve Kütüphaneler
+
+Projeyi geliştirirken .NET 10 ve sektör standartlarına uygun güncel kütüphaneler tercih edilmiştir:
+
+* **.NET 10** (ASP.NET Core Web API)
+* **Entity Framework Core** (ORM Aracı)
+* **MediatR** (CQRS pattern uygulaması için)
+* **FluentValidation** (Veri doğrulama / Validation işlemleri için)
+* **Mapster** (Nesneler arası veri transferi / Object Mapping için)
+* **Scrutor** (Dependency Injection kayıt işlemlerini otomatize etmek için)
+* **OData** (Dinamik ve esnek veri listeleme/sorgulama işlemleri için)
+* **MS SQL Server** (Veritabanı olarak)
+* **Scalar / OpenAPI** (Modern API dokümantasyonu ve testi için)
+
+## 🏗 Mimari Yapı (Clean Architecture Katmanları)
+
+Proje, bağımlılıkların içe doğru (Core/Domain katmanına) olduğu 4 temel katmandan oluşmaktadır:
+
+1. **Domain (Çekirdek Katman):**
+   * Veritabanı tablolarına karşılık gelen Entity sınıfları, Enum'lar ve Value Object'ler (Örn: Adres bilgileri) bulunur.
+   * `Auditable Entity` yapısı kullanılarak Oluşturulma (CreateDate), Güncellenme (UpdateDate) ve Silinme (DeleteDate) kayıtları merkezileştirilmiştir.
+   * Hiçbir dış kütüphaneye bağımlılığı yoktur.
+
+2. **Application (Uygulama Katmanı):**
+   * İş kurallarının (Business Rules) ve Use-Case'lerin bulunduğu katmandır.
+   * **CQRS** mantığı ile `Commands` (Ekle, Güncelle, Sil) ve `Queries` (Listele, Getir) olarak ayrılmıştır.
+   * Validasyon kuralları (`FluentValidation` ile) ve arayüzler (Interfaces) burada tanımlanır. Yalnızca Domain katmanına bağımlıdır.
+
+3. **Infrastructure (Altyapı Katmanı):**
+   * Veritabanı bağlantısı (`DbContext`), Entity konfigürasyonları (Fluent API) ve dış servis entegrasyonları burada yer alır.
+   * Generic Repository Pattern uygulamaları ve Entity Framework Core işlemleri bu katmanda gerçekleştirilir.
+
+4. **Web API (Sunum Katmanı):**
+   * İstemcilerin (Frontend, Mobil vb.) istek attığı katmandır.
+   * Performans odaklı olması için yazma (Command) işlemlerinde **Minimal API**, okuma (Query) işlemlerinde ise **OData Controller** yapıları bir arada kullanılmıştır.
+   * Global Exception Handling (Merkezi Hata Yönetimi) mekanizması kurularak hatalar standardize edilmiştir (`Result Pattern` ile dönülmüştür).
+
+## ⚙️ Tasarım Desenleri ve Yaklaşımlar (Design Patterns)
+* **CQRS (Command Query Responsibility Segregation):** Okuma ve yazma işlemlerinin birbirinden izole edilmesi.
+* **Repository & Unit of Work Pattern:** Veritabanı işlemlerinin soyutlanarak tek bir merkezden yönetilmesi ve transaction işlemlerinin güvene alınması.
+* **Result Pattern:** API cevaplarının standart bir yapı (Başarılı/Başarısız, Mesaj, Veri Listesi) üzerinden dönülmesi.
+* **Soft Delete:** Verilerin fiziksel olarak veritabanından uçurulması yerine silinme tarihinin işaretlenerek saklanması mantığı.
+
+
