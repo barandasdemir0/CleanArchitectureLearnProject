@@ -24,7 +24,8 @@ public sealed record EmployeeCreateCommand(
     DateOnly BirthOfDate,
     decimal Salary,
     PersonelInformation PersonelInformation,
-    Address? Address
+    Address? Address,
+    bool IsActive
     ):IRequest<Result<string>>;
 
 internal sealed class EmployeeCreateCommandHandler(IEmployeeRepository employeeRepository,IUnitOfWork unitOfWork) : IRequestHandler<EmployeeCreateCommand, Result<string>>

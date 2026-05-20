@@ -10,6 +10,11 @@ using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddResponseCompression(opt =>
+{
+    opt.EnableForHttps = true
+});
+
 builder.AddServiceDefaults();
 builder.Services.AddApplication();
 builder.Services.AddInfrasturecture(builder.Configuration);
@@ -42,16 +47,20 @@ var app = builder.Build();
 app.MapOpenApi();
 app.MapScalarApiReference();
 app.MapDefaultEndpoints();
+app.UseHttpsRedirection();
+
 app.UseCors(x => x.AllowAnyHeader().AllowCredentials().AllowAnyMethod().SetIsOriginAllowed(t => true));
 //signal R ile çalışınılacaksa allowcredintials kullanılması gerekir ve setis origin allow
 app.RegisterRoutes();
-app.UseExceptionHandler();
+
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseResponseCompression();
+app.UseExceptionHandler();
 app.MapControllers().RequireRateLimiting("fixed").RequireAuthorization();
 //bearer yazmak yerine her controllerda  RequireAuthorization yazıyoruz
 
 ExtensionsMiddleware.CreateFirstUser(app);
+
 app.Run();
