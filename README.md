@@ -4,7 +4,7 @@ Bu proje, modern yazılım geliştirme prensiplerini ve .NET ekosistemindeki gü
 
 ## 🛠 Kullanılan Teknolojiler ve Kütüphaneler
 
-Projeyi geliştirirken .NET 10 ve sektör standartlarına uygun güncel kütüphaneler tercih edilmiştir:
+Projeyi geliştirirken **.NET 10** ve sektör standartlarına uygun güncel kütüphaneler tercih edilmiştir:
 
 * **.NET 10** (ASP.NET Core Web API)
 * **Entity Framework Core** (ORM Aracı)
@@ -13,6 +13,7 @@ Projeyi geliştirirken .NET 10 ve sektör standartlarına uygun güncel kütüph
 * **Mapster** (Nesneler arası veri transferi / Object Mapping için)
 * **Scrutor** (Dependency Injection kayıt işlemlerini otomatize etmek için)
 * **OData** (Dinamik ve esnek veri listeleme/sorgulama işlemleri için)
+* **Keycloak** (Merkezi kimlik doğrulama, yetkilendirme ve IAM - Identity and Access Management için)
 * **MS SQL Server** (Veritabanı olarak)
 * **Scalar / OpenAPI** (Modern API dokümantasyonu ve testi için)
 
@@ -33,6 +34,7 @@ Proje, bağımlılıkların içe doğru (Core/Domain katmanına) olduğu 4 temel
 3. **Infrastructure (Altyapı Katmanı):**
    * Veritabanı bağlantısı (`DbContext`), Entity konfigürasyonları (Fluent API) ve dış servis entegrasyonları burada yer alır.
    * Generic Repository Pattern uygulamaları ve Entity Framework Core işlemleri bu katmanda gerçekleştirilir.
+   * **Keycloak** üzerinden sağlanan Authentication (Kimlik Doğrulama) konfigürasyonları ve token doğrulama işlemleri burada izole edilmiştir.
 
 4. **Web API (Sunum Katmanı):**
    * İstemcilerin (Frontend, Mobil vb.) istek attığı katmandır.
@@ -40,9 +42,9 @@ Proje, bağımlılıkların içe doğru (Core/Domain katmanına) olduğu 4 temel
    * Global Exception Handling (Merkezi Hata Yönetimi) mekanizması kurularak hatalar standardize edilmiştir (`Result Pattern` ile dönülmüştür).
 
 ## ⚙️ Tasarım Desenleri ve Yaklaşımlar (Design Patterns)
+
 * **CQRS (Command Query Responsibility Segregation):** Okuma ve yazma işlemlerinin birbirinden izole edilmesi.
 * **Repository & Unit of Work Pattern:** Veritabanı işlemlerinin soyutlanarak tek bir merkezden yönetilmesi ve transaction işlemlerinin güvene alınması.
+* **Outbox Pattern:** Veritabanı transaction'ları ile dış sistemlere iletilecek işlemlerin tutarlılığını garanti altına alan yapı.
 * **Result Pattern:** API cevaplarının standart bir yapı (Başarılı/Başarısız, Mesaj, Veri Listesi) üzerinden dönülmesi.
 * **Soft Delete:** Verilerin fiziksel olarak veritabanından uçurulması yerine silinme tarihinin işaretlenerek saklanması mantığı.
-
-
