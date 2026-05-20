@@ -2,11 +2,16 @@
 
 Bu proje, modern yazılım geliştirme prensiplerini ve .NET ekosistemindeki güncel yaklaşımları öğrenmek amacıyla geliştirilmiş bir **Clean Architecture** (Temiz Mimari) uygulamasıdır. Proje, Taner Saydam'ın "Sıfırdan Clean Architecture Setup 2025" eğitim serisi referans alınarak adım adım inşa edilmiştir.
 
+## 🏗 Mimarî Yapı
+
+Aşağıdaki diyagram, projenin temel mimari yapısını ve bağımlılıkların içe doğru (Core/Domain katmanına) olan akışını görselleştirmektedir. Kurumsal seviyedeki projeler için bu yapı, kodun bakımını, test edilebilirliğini ve sürdürülebilirliğini kolaylaştırmaktadır.
+
 ## 🛠 Kullanılan Teknolojiler ve Kütüphaneler
 
 Projeyi geliştirirken **.NET 10** ve sektör standartlarına uygun güncel kütüphaneler tercih edilmiştir:
 
 * **.NET 10** (ASP.NET Core Web API)
+* **.NET Aspire** (Uygulama orkestrasyonu, OpenTelemetry destekli observability ve dağıtık konfigürasyon yönetimi için)
 * **Entity Framework Core** (ORM Aracı)
 * **MediatR** (CQRS pattern uygulaması için)
 * **FluentValidation** (Veri doğrulama / Validation işlemleri için)
@@ -17,13 +22,14 @@ Projeyi geliştirirken **.NET 10** ve sektör standartlarına uygun güncel küt
 * **MS SQL Server** (Veritabanı olarak)
 * **Scalar / OpenAPI** (Modern API dokümantasyonu ve testi için)
 
-## 🏗 Mimari Yapı (Clean Architecture Katmanları)
+## 🏗 Katman Detayları
 
-Proje, bağımlılıkların içe doğru (Core/Domain katmanına) olduğu 4 temel katmandan oluşmaktadır:
+Proje 4 temel katmandan oluşmaktadır:
 
 1. **Domain (Çekirdek Katman):**
    * Veritabanı tablolarına karşılık gelen Entity sınıfları, Enum'lar ve Value Object'ler (Örn: Adres bilgileri) bulunur.
    * `Auditable Entity` yapısı kullanılarak Oluşturulma (CreateDate), Güncellenme (UpdateDate) ve Silinme (DeleteDate) kayıtları merkezileştirilmiştir.
+   * **Domain Events** (Alan olayları) bu katmanda tetiklenmek üzere tanımlanır.
    * Hiçbir dış kütüphaneye bağımlılığı yoktur.
 
 2. **Application (Uygulama Katmanı):**
@@ -41,10 +47,11 @@ Proje, bağımlılıkların içe doğru (Core/Domain katmanına) olduğu 4 temel
    * Performans odaklı olması için yazma (Command) işlemlerinde **Minimal API**, okuma (Query) işlemlerinde ise **OData Controller** yapıları bir arada kullanılmıştır.
    * Global Exception Handling (Merkezi Hata Yönetimi) mekanizması kurularak hatalar standardize edilmiştir (`Result Pattern` ile dönülmüştür).
 
-## ⚙️ Tasarım Desenleri ve Yaklaşımlar (Design Patterns)
+## ⚙️ Tasarım Desenleri ve Yaklaşımlar
 
 * **CQRS (Command Query Responsibility Segregation):** Okuma ve yazma işlemlerinin birbirinden izole edilmesi.
 * **Repository & Unit of Work Pattern:** Veritabanı işlemlerinin soyutlanarak tek bir merkezden yönetilmesi ve transaction işlemlerinin güvene alınması.
+* **Domain Events:** Sistem içindeki durum değişikliklerini asenkron bir şekilde diğer parçalara haber vererek iş süreçlerinin tutarlılığını sağlamak.
 * **Outbox Pattern:** Veritabanı transaction'ları ile dış sistemlere iletilecek işlemlerin tutarlılığını garanti altına alan yapı.
 * **Result Pattern:** API cevaplarının standart bir yapı (Başarılı/Başarısız, Mesaj, Veri Listesi) üzerinden dönülmesi.
 * **Soft Delete:** Verilerin fiziksel olarak veritabanından uçurulması yerine silinme tarihinin işaretlenerek saklanması mantığı.
