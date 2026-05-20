@@ -11,7 +11,7 @@ namespace CleanArchitectureLearnProject.Infrastructure.Services;
 
 internal sealed class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
 {
-    public Task<string> CreateTokenAsync(AppUser user, CancellationToken cancellationToken)
+    public Task<string> CreateTokenAsync(AppUser user, string password, CancellationToken cancellationToken)
     {
         List<Claim> claims = new()
         {

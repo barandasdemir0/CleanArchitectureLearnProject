@@ -7,5 +7,4 @@
     <Project Path="src/CleanArchitectureLearnProject.ServiceDefaults/CleanArchitectureLearnProject.ServiceDefaults.csproj" />
     <Project Path="src/CleanArchitectureLearnProject.WebAPI/CleanArchitectureLearnProject.WebAPI.csproj" />
   </Folder>
-  <Folder Name="/tests/" />
 </Solution>

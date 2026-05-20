@@ -34,7 +34,7 @@ internal sealed class ApplicationDbContext : IdentityDbContext<AppUser,IdentityR
         var entries = ChangeTracker.Entries<Entity>();
 
         HttpContextAccessor httpContextAccessor = new();
-        string userIdString = httpContextAccessor.HttpContext!.User.Claims.First(p => p.Type == "user-id").Value;
+        string userIdString = httpContextAccessor.HttpContext!.User.Claims.First(p => p.Type == "sub").Value;
         Guid userId = Guid.Parse(userIdString);
 
 

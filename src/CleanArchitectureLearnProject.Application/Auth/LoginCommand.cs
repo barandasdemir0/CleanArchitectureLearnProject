@@ -53,7 +53,7 @@ internal sealed class LoginCommandHandler(UserManager<AppUser> userManager, Sign
 
 
         //token üret
-        var token = await jwtProvider.CreateTokenAsync(user, cancellationToken);
+        var token = await jwtProvider.CreateTokenAsync(user,request.Password, cancellationToken);
 
         var response = new LoginCommandResponse()
         {

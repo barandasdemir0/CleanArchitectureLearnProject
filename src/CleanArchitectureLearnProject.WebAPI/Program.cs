@@ -3,6 +3,7 @@ using CleanArchitectureLearnProject.Infrastructure;
 using CleanArchitectureLearnProject.WebAPI;
 using CleanArchitectureLearnProject.WebAPI.Controllers;
 using CleanArchitectureLearnProject.WebAPI.Modules;
+using Keycloak.AuthServices.Authorization;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.RateLimiting;
 using Scalar.AspNetCore;
@@ -12,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddResponseCompression(opt =>
 {
-    opt.EnableForHttps = true
+    opt.EnableForHttps = true;
 });
 
 builder.AddServiceDefaults();
@@ -40,6 +41,9 @@ builder.Services.AddRateLimiter(x => x.AddFixedWindowLimiter("fixed", cfg =>
 
 builder.Services.AddExceptionHandler<ExceptionHandler>().AddProblemDetails();
 
+
+builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
+builder.Services.AddAuthorization().AddKeycloakAuthorization(builder.Configuration);
 var app = builder.Build();
 
 
