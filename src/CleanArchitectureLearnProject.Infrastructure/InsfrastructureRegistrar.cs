@@ -1,6 +1,8 @@
 ﻿using CleanArchitectureLearnProject.Domain.Users;
 using CleanArchitectureLearnProject.Infrastructure.Application;
+using CleanArchitectureLearnProject.Infrastructure.Options;
 using GenericRepository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +36,17 @@ public static class InsfrastructureRegistrar
         })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
+
+
+        services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
+        services.ConfigureOptions<JwtOptionsSetup>();
+
+        services.AddAuthentication(opt =>
+        {
+            opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer();
+        services.AddAuthorization();
 
         services.Scan(opt =>
         {

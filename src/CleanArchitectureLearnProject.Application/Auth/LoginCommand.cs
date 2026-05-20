@@ -1,4 +1,5 @@
-﻿using CleanArchitectureLearnProject.Domain.Users;
+﻿using CleanArchitectureLearnProject.Application.Services;
+using CleanArchitectureLearnProject.Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ public sealed record LoginCommandResponse
     public string AccessToken { get; set; } = default!;
 }
 
-internal sealed class LoginCommandHandler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
+internal sealed class LoginCommandHandler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,IJwtProvider jwtProvider) : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
 {
     public async Task<Result<LoginCommandResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
@@ -52,10 +53,11 @@ internal sealed class LoginCommandHandler(UserManager<AppUser> userManager, Sign
 
 
         //token üret
+        var token = await jwtProvider.CreateTokenAsync(user, cancellationToken);
 
         var response = new LoginCommandResponse()
         {
-            AccessToken = ""
+            AccessToken = token
         };
 
         return response;

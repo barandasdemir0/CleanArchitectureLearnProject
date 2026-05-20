@@ -46,7 +46,12 @@ app.UseCors(x => x.AllowAnyHeader().AllowCredentials().AllowAnyMethod().SetIsOri
 //signal R ile çalışınılacaksa allowcredintials kullanılması gerekir ve setis origin allow
 app.RegisterRoutes();
 app.UseExceptionHandler();
-app.MapControllers().RequireRateLimiting("fixed");
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers().RequireRateLimiting("fixed").RequireAuthorization();
+//bearer yazmak yerine her controllerda  RequireAuthorization yazıyoruz
 
 ExtensionsMiddleware.CreateFirstUser(app);
 app.Run();
