@@ -4,6 +4,7 @@ using CleanArchitectureLearnProject.Infrastructure.Application;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitectureLearnProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260519153152_AddressTypeChanged")]
+    partial class AddressTypeChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,14 +37,15 @@ namespace CleanArchitectureLearnProject.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreateAt")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<Guid>("CreateUserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CreateUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("DeleteAt")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<Guid?>("DeleteUserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("DeleteUserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -60,8 +64,8 @@ namespace CleanArchitectureLearnProject.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("UpdateAt")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<Guid?>("UpdateUserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UpdateUserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -84,14 +88,15 @@ namespace CleanArchitectureLearnProject.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreateAt")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<Guid>("CreateUserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CreateUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("DeleteAt")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<Guid?>("DeleteUserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("DeleteUserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -143,8 +148,8 @@ namespace CleanArchitectureLearnProject.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("UpdateAt")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<Guid?>("UpdateUserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UpdateUserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)

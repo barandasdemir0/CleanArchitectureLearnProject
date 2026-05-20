@@ -47,4 +47,6 @@ app.UseCors(x => x.AllowAnyHeader().AllowCredentials().AllowAnyMethod().SetIsOri
 app.RegisterRoutes();
 app.UseExceptionHandler();
 app.MapControllers().RequireRateLimiting("fixed");
+
+ExtensionsMiddleware.CreateFirstUser(app);
 app.Run();

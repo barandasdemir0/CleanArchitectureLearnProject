@@ -14,11 +14,11 @@ public sealed class AppUser:IdentityUser<Guid>
 
     #region audit log
     public DateTimeOffset CreateAt { get; set; }
-    public string CreateUserId { get; set; } = default!; //create işlemi yapan userın ıdsı zorunlu hale getirdik
+    public Guid CreateUserId { get; set; } = default!; //create işlemi yapan userın ıdsı zorunlu hale getirdik
     public DateTimeOffset? UpdateAt { get; set; }
-    public string? UpdateUserId { get; set; }
+    public Guid? UpdateUserId { get; set; }
     public bool IsDeleted { get; set; }
     public DateTimeOffset? DeleteAt { get; set; }
-    public string? DeleteUserId { get; set; }
+    public Guid? DeleteUserId { get; set; }
     #endregion
 }
